@@ -10,4 +10,3 @@
 ## Sep-18 (1.5 h):
 - [JavaScript: Objects and Arrays](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/05-JS-Objects-and-Arrays#strings-and-their-properties)
     - Continuation: Strings, JSON and examples.
-- [JavaScript: Higher-Order Functions](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/06-JS-Higher-Order-Functions)
