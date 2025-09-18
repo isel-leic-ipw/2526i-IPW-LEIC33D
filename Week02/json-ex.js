@@ -15,3 +15,4 @@ console.log(personSerialized);
 
 // Recovering the object from a serialized JSON:
 console.log(JSON.parse(personSerialized).surnames);
+console.log("Typeof JSON.parse(personSerialized):", typeof JSON.parse(personSerialized));

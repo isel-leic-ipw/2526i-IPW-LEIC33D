@@ -11,8 +11,8 @@ let s2 = new String("Hello");
 // Object literal
 let obj = { x: 3, y: 2 };
 console.log("1:", typeof obj);
-console.log("2.", obj['x']); // or point1.x
-console.log("3.", obj.y); // or point1['y']
+console.log("2.", obj['x']); // or obj.x
+console.log("3.", obj.y); // or obj['y']
 
 for (let i in obj) {
     console.log("4.", i, obj[i]);
@@ -42,9 +42,9 @@ function formatCoordFunction() {
 const point1 = {
     x: 0.1,
     y: 2.8,
-    formatCoord: formatCoordFunction
+    formatCoordFunction
 };
-console.log("8:", point1.formatCoord());
+console.log("8:", point1.formatCoordFunction());
 
 // Using the method call in object obj:
 console.log("9:", formatCoordFunction.call(obj));
