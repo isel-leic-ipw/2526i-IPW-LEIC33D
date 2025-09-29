@@ -4,3 +4,7 @@ This repository provides the codes used in the classroom of the LEIC 33D class o
 
 The [Wiki](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki) contains the lecture notes presented in the classroom.
 - Follow this material as a starting point.
+
+## Assignments
+
+1. [Assignment 1](https://github.com/isel-leic-ipw/2526i-IPW-LEIC31D/wiki/IPW_IP-2526-1-A1)
