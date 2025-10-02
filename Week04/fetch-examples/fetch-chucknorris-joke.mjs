@@ -8,14 +8,14 @@ const URL_CHUCK_NORRIS_JOKE = "https://api.chucknorris.io/jokes/mLUozC5_T3uidSRn
 // const p = lenP.then(len => console.log(len));
 // p.catch((err) => {console.log("Error")});
 
-// fetch(URL_CHUCK_NORRIS_JOKE)        // Promise <Response>
-//     .then(resp => resp.text())      // Promise <String>
-//     .then(text => {console.log(text); return text}) // Promise <String>
-//     .then(text => text.length)      // Promise <Number>
-//     .then(len => console.log(len))
-//     .catch((err) => console.log("Error"));
-
 fetch(URL_CHUCK_NORRIS_JOKE)        // Promise <Response>
-    .then(resp => resp.json())      // Promise <Object>
-    .then(obj => console.log(obj.value)) // Promise <undefined>
-    .catch((err) => console.log("Error"));
+    .then(resp => resp.text())      // Promise <String>
+    .then(text => {console.log("Content:", text); return text}) // Promise <String>
+    .then(text => text.length)      // Promise <Number>
+    .then(len => console.log("Length of content:", len))  // Promise <undefined>
+    .catch((err) => console.error("Error", err));
+
+// fetch(URL_CHUCK_NORRIS_JOKE)        // Promise <Response>
+//     .then(resp => resp.json())      // Promise <Object>
+//     .then(obj => console.log(obj.value)) // Promise <undefined>
+//     .catch((err) => console.log("Error"));
