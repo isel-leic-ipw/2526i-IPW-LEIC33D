@@ -9,6 +9,6 @@ longOperationAsyncWithCallback(VAL, processResult);
 
 // Adding "concurrence":
 //let res = longOperation(VAL);
-//processResult(VAL);
+//processResult(res);
 
 console.log("END");

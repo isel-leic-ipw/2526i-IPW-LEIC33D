@@ -15,9 +15,9 @@ export function longOperation(a) {
 // ASYNC WITH CALLBACK
 // (Number, Function) -> undefined
 export function longOperationAsyncWithCallback(a, callback) {    
+    if(!Number(a)) return "Error"; // How to handle error here??
     // Asynchronous operation with setTimeout
-    let product = "async with Callback (setTimeout) a=" + a;
-    if(!Number(a)) return;
+    let product = "async with Callback (setTimeout) a=" + a;    
     // setTimeout sets asynchronously a callback to handler the product after 3 seconds.
     setTimeout(() => callback(product), 3000);
     console.log("Callback was set...");
@@ -27,7 +27,7 @@ export function longOperationAsyncWithCallback(a, callback) {
 // (Number) -> Promise
 export function longOperationAsyncWithPromise(a) {
     const p = new Promise(function(resolve, reject) {
-        if(!Number(a)) {
+        if(!Number(a)) { // Handling error
             // Promise rejects.
             reject("'a' must be a number");
         }
@@ -44,7 +44,7 @@ export function longOperationAsyncWithPromise(a) {
 // (String) -> undefined
 export function processResultError(error) {
     console.log("Calling processResultError...");
-    console.log("\tError:", error);
+    console.error("\tError:", error);
 }
 
 // (String) -> undefined
