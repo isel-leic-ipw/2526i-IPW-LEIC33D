@@ -17,7 +17,8 @@ readFile(INPUT_FILE)        // Promise<Buffer>
 
 console.log("END");
 
-
+// Processes the first line of the content file (a buffer).
+// Returns the first line (string).
 function processFirstLine(fileContent) {
 
     console.log("File content ready");
@@ -29,6 +30,8 @@ function processFirstLine(fileContent) {
     return firstLine;
 }
 
+// Write a string in the output file.
+// Returns a Promise of undefined.
 function processWriteFile(firstLine){
     return writeFile(OUTPUT_FILE, firstLine);
 }
@@ -39,5 +42,6 @@ function confirmWriteFile() {
 
 function processError(err) {
     console.log("Error handling file");
-    console.log(err);
+    console.error("Error message:", err.message);
+    console.error("Error code:", err.code);
 }

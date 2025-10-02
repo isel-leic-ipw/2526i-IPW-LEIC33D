@@ -12,10 +12,12 @@ let line;
 // console.log(p1);
 // p.catch(processError);
 
-readFile(INPUT_FILE)
-    .then(processFile)
-    .catch(processError);
+readFile(INPUT_FILE) // Promise<Buffer>
+    .then(processFile) // Promise<undefined>
+    .catch(processError)
+    .finally(() => console.log("File reading completed."));
 
+// line is undefined because the readFile function is async.
 console.log("--->", line);
 
 console.log("END");
@@ -30,6 +32,7 @@ function processFile(fileContent) {
 
 function processError(err) {
     console.log("Error handling file!");
-    console.log(err);
+    console.error("Message:", err.message);
+    console.error("Error code:", err.code);
 }
 
