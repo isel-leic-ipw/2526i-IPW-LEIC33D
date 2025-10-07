@@ -1,6 +1,7 @@
 const urlArray = [
     "https://eloquentjavascript.net/05_higher_order.html",
-    "https://eloquentjavascript.net/11_async.html"
+    "https://eloquentjavascript.net/11_async.html",
+    "https://eloquentjavascript.net/10_modules.html"
     //, "http://not.exist"
 ];
 
@@ -13,15 +14,15 @@ promiseArray = urlArray.map(url => fetch(url));
 //             arrPromiseText.push(resp.text());
 //         return Promise.all(arrPromiseText);
 //     })
-//     .then(arrText => arrText.reduce((t1, t2) => t1.length + t2.length))
+//     .then(arrText => arrText.reduce((t1, t2) => t1 + t2.length, 0))
 //     .then(totalLen => console.log(totalLen))
-//     .catch(err => console.error("ERROR!"));
+//     .catch(err => console.error("ERROR!", err.message));
 
-Promise.all(promiseArray)
-    .then(arrResp => Promise.all(arrResp.map(resp => resp.text())))
-    .then(arrText => arrText.reduce((t1, t2) => t1.length + t2.length))
+Promise.all(promiseArray) // Promise<Array<Response>>
+    .then(arrResp => Promise.all(arrResp.map(resp => resp.text()))) // Promise<Array<String>>
+    .then(arrText => arrText.reduce((t1, t2) => t1 + t2.length, 0))
     .then(totalLen => console.log(totalLen))
-    .catch(e => console.error("ERROR!!!", e));
+    .catch(e => console.error("ERROR!!!", e.message));
 
 
 // An implementation of Promise.all:

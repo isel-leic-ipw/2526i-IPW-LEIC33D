@@ -14,9 +14,6 @@ Promise.race(promiseArray)
 
 // An implementation of Promise.race:
 function promiseRace(arrayPromises){
-    const arrayValues = [];
-    let count = 0;
-    let rejected = false;
     return new Promise((resolve, reject) => {
         for (let p of arrayPromises){
             p.then(p => resolve(p))
