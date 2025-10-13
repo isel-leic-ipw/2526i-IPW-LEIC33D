@@ -1,0 +1,71 @@
+### Simple Get request to example.com
+
+GET http://example.com/ HTTP/1.1
+
+### Simple Get request to example.com (with header Host)
+
+GET / HTTP/1.1
+Host: example.com
+
+
+### Get request to the football API using KEY env variable.
+
+GET http://api.football-data.org/v4/teams HTTP/1.1
+X-Auth-Token: {{KEY}}
+
+
+### Get request to the team 5 resource (football API).
+
+GET /v4/teams/5
+Host: api.football-data.org
+X-Auth-Token: {{KEY}}
+
+
+### Example of a Options request
+
+OPTIONS / HTTP/1.1
+Host: info.cern.ch
+
+
+### Replying the request made by Chrome browser
+
+GET /hypertext/WWW/TheProject.html HTTP/1.1
+Host: info.cern.ch
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
+Cache-Control: no-cache
+Connection: keep-alive
+Pragma: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+
+
+### Post request to a website that echoes the value that was posted using URL Encoded format.
+
+POST http://echo.free.beeceptor.com/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+acronym=URL&meaning=Uniform%20Resource%20Location
+
+
+### Post request to a website that echoes the value that was posted using JSON format.
+
+POST / HTTP/1.1
+Host: echo.free.beeceptor.com
+Content-Type: application/json
+
+{
+    "acronym": "JSON",
+    "meaning": "JavaScript Object Notation"
+}
+
+
+### Get request in local server
+
+GET http://localhost:8000/ HTTP/1.1
+
+### Get request in local server (with header Host)
+
+GET / HTTP/1.1
+Host: localhost:8000

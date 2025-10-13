@@ -1,0 +1,56 @@
+### Status code: 301 Moved Permanently
+# Moved permanently for port 443 (HTTPS) stead of 80 (HTTP)
+GET / HTTP/1
+Host: developer.mozilla.org
+User-Agent: Rest Client (VSCode)
+
+
+### Status code: 302 Found
+# Needs to specify the resource different from /
+GET / HTTP/1.1
+Host: developer.mozilla.org:443
+User-Agent: Rest Client (VSCode)
+
+
+### Status code: 200 Ok
+GET /en-US/ HTTP/1
+Host: developer.mozilla.org:443
+User-Agent: Rest Client (VSCode)
+
+
+### Status code: 400 Bad Request
+# Query should follow an specific format, such as:
+# https://api.fda.gov/food/event.json?search=products.industry_code:23&limit=1
+GET /food/event.json?query=products.industry_code:23 HTTP/1.1
+Host: api.fda.gov:443
+
+
+### Status code: 401 Unauthorized
+# Missing credentials...
+GET /v2/search/instant?query=hamburger HTTP/1.1
+Host: trackapi.nutritionix.com:443
+
+
+### 403 Forbidden
+POST / HTTP/1.1
+Host: example.com
+Content-Type: application/json
+
+{}
+
+
+### Status code: 404 Not Found
+GET /not-a-resource HTTP/1.1
+Host: www.nasa.gov:443
+
+
+### Status code: 429 Too Many Requests
+# After more than 10 requests per minute.
+GET /v4/teams
+Host: api.football-data.org
+X-Auth-Token: {{KEY}}
+
+### 501 Not Implemented
+OPTIONS / HTTP/1.1
+Host: example.com
+
