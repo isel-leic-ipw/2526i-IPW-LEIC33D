@@ -1,0 +1,7 @@
+{
+    "rest-client.environmentVariables": {
+        "sandbox": {
+            "KEY": "your token key goes here"
+        }
+    }
+}
