@@ -19,7 +19,7 @@ let requestOptions = {
 // Number => Promise<obj>
 function getObjAPI(){
   //return fetch(`http://api.football-data.org/v4/teams?limit=50&offset=50`, requestOptions)
-  return fetch(`http://api.football-data.org/v4/teams/100`, requestOptions)
+  return fetch(`http://api.football-data.org/v4/teams`, requestOptions)
   .then(response => response.json())
   .catch(error => console.log('error', error));
 }
