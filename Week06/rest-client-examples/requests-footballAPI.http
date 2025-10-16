@@ -1,0 +1,39 @@
+
+####################################
+### Requests to the Football API ###
+####################################
+
+#################################################################
+# Configuring the KEY as an environment variable for REST Client:
+# KEY is in the setting file .vscode/settings.json:
+#{
+#    "rest-client.environmentVariables": {
+#        "sandbox": {
+#            "KEY": "XXXXXXXXXXXXXXX"
+#        }
+#    }
+#}
+#
+# Then, select the sandbox environment when using Rest Client.
+#################################################################
+
+
+### Getting Chelsea team information 
+GET http://api.football-data.org/v4/teams/61
+X-Auth-Token: {{ KEY }}
+
+### Getting teams information from 0 to 500 
+GET http://api.football-data.org/v4/teams?limit=500
+X-Auth-Token: {{ KEY }}
+
+### Getting teams information from 500 to 1000
+GET http://api.football-data.org/v4/teams?limit=500&offset=500
+X-Auth-Token: {{ KEY }}
+
+### Getting today matches
+GET http://api.football-data.org/v4/matches
+X-Auth-Token: {{ KEY }}
+
+### Getting a match of a specific day interval
+GET http://api.football-data.org/v4/matches?dateFrom=2025-12-20&dateTo=2025-12-20
+X-Auth-Token: {{ KEY }}
