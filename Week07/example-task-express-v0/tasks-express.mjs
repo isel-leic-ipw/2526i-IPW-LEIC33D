@@ -52,15 +52,17 @@ function getTask(req, res){
 function getAllTasks(req, res){
   console.log("Getting all tasks.");
   console.log("Query string:", req.query);
-  res.set("Content-Type", "application/json");
   if ("search" in req.query){
-    let searchTasks = TASKS.filter(task => (task.title.includes(req.query["search"]) || 
-      task.description.includes(req.query["search"])))
-    res.json({tasks: searchTasks})
+    const querySearch = req.query["search"];
+    const searchTasks = TASKS.filter(task => (task.title.includes(querySearch) || 
+      task.description.includes(querySearch)));
+    res.json({tasks: searchTasks});
   }
-  else
+  else {
+    res.set("Content-Type", "application/json");
     res.send(JSON.stringify({tasks: TASKS}));
-    //res.json(tasks);
+    //res.json({tasks: TASKS}); // The same as above
+  }
 }
 
 function addTask(req, res){
@@ -119,4 +121,4 @@ function updateTask(req, res){
   }
 }
 
-// Test: use the Rest Client in VScode to make the requests of resquest.http file.
+// Test: use the Rest Client in VScode to make the requests of request.http file.
