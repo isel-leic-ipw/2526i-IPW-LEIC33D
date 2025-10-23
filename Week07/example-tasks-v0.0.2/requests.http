@@ -1,0 +1,101 @@
+### Insert a task
+POST http://localhost:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Study HTTP",
+    "description": "Read the documentation."
+}
+
+
+### Insert another task
+POST http://localhost:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Do class exercise",
+    "description": "Implement the task application."
+}
+
+
+### Insert another task
+POST http://localhost:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Install Rest Client",
+    "description": "Install Rest Client and test with HTTP requests."
+}
+
+
+### Get all tasks
+GET http://localhost:8000/tasks HTTP/1.1
+
+### Get all tasks with query string
+GET http://localhost:8000/tasks?search=HTTP HTTP/1.1
+
+### Get task 1
+GET http://localhost:8000/tasks/1 HTTP/1.1
+
+
+### Update task 1
+PUT http://localhost:8000/tasks/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Do class exercise",
+    "description": "Reimplement the task application!!!"
+}
+
+### Get all tasks (again)
+GET http://localhost:8000/tasks HTTP/1.1
+
+
+### Delete task 0
+DELETE http://localhost:8000/tasks/0 HTTP/1.1
+
+### Get all tasks (again)
+GET http://localhost:8000/tasks HTTP/1.1
+
+
+##############
+### Errors ###
+##############
+
+### Get a task that does not exist (Not Found)
+GET http://localhost:8000/tasks/10 HTTP/1.1
+
+### Post with wrong body format (Bad Request)
+POST http://localhost:8000/tasks HTTP/1.1
+
+wrong format
+
+### Post without type content (Bad Request)
+POST http://localhost:8000/tasks HTTP/1.1
+
+{
+    "title": "This is an error",
+    "description": "There is no 'Content-Type: application/json'!!!"
+}
+
+### Post without type content (Bad Request)
+POST http://localhost:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "Testing an error!!!"
+}
+
+### Delete a task that does not exist (Not Found)
+DELETE http://localhost:8000/tasks/10 HTTP/1.1
+
+### Put a task that does not exist (Not Found)
+PUT http://localhost:8000/tasks/10 HTTP/1.1
+
+### Put with wrong body format (Bad Request)
+PUT http://localhost:8000/tasks/1 HTTP/1.1
+
+wrong format
+
+### Get all tasks: nothing changes after "error" requests
+GET http://localhost:8000/tasks HTTP/1.1

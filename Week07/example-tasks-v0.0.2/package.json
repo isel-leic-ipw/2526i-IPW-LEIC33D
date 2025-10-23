@@ -1,0 +1,16 @@
+{
+  "name": "example-tasks",
+  "version": "0.0.2",
+  "description": "Simple Task Manager App.",
+  "author": "Fernanda Passos",
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+    "start": "node tasks-server.mjs",
+    "start-dev": "nodemon tasks-server.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
