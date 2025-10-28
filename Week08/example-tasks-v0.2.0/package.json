@@ -1,7 +1,8 @@
 {
-  "name": "example-task-express-v1",
-  "version": "1.0.0",
+  "name": "example-tasks",
+  "version": "0.2.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node tasks-server.mjs",
     "start-dev": "nodemon tasks-server.mjs",

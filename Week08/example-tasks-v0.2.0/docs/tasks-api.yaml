@@ -7,11 +7,11 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: 0.2.0
 servers:
   - description: Localhost server for testing API
     url: http://localhost:8000
-security:
+security: # Bearer Authorization is global
   - bearerAuth: []
 tags:
   - name: Tasks
@@ -46,28 +46,32 @@ paths:
                   token:
                     type: string
                     format: uuid
-        400:
-          description: Invalid input, object invalid
-          content: {}
+        400: 
+          $ref: "#/components/responses/400InvalidBody"
   /tasks:
     description: Resource that contains all Tasks
     get:
       tags:
         - Tasks
-      summary: get Tasks
+      summary: get all tasks
       description: Get all tasks from an specified user (by token).
       operationId: getAllTasks
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          required: false
+          description: Query to search a String in all tasks returning a subset of tasks.
       responses:
         200:
           description: In case of success, returns a list of tasks.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Task"
+                $ref: "#/components/schemas/Tasks"
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: "#/components/responses/400InvalidQuery"
         401:
           $ref: "#/components/responses/401Unauthorized"
     post:
@@ -94,8 +98,8 @@ paths:
         401:
           $ref: "#/components/responses/401Unauthorized"
         400:
-          description: Invalid input, object invalid
-          content: {}
+          $ref: "#/components/responses/400InvalidBody"
+
   /tasks/{taskId}:
     description: The resource that represents one Task
     get:
@@ -103,8 +107,6 @@ paths:
         - Tasks
       summary: Get a task given its id
       operationId: getTask
-      security:
-        - bearerAuth: []
       parameters:
         - name: taskId
           in: path
@@ -120,8 +122,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Task"
-        400:
-          $ref: "#/components/responses/400BadRequest"
         401:
           $ref: "#/components/responses/401Unauthorized"
         404:
@@ -129,13 +129,13 @@ paths:
     put:
       tags:
         - Tasks
-      summary: updates a task
-      description: Updates a Task in the system
+      summary: update (replace) a task
+      description: Updates (replaces) a Task in the system
       operationId: updateTask
       parameters:
         - name: taskId
           in: path
-          description: ID of the task to be deleted
+          description: ID of the task to be replaced
           required: true
           schema:
             type: integer
@@ -148,9 +148,14 @@ paths:
       responses:
         201:
           description: task updated
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
         401:
           $ref: "#/components/responses/401Unauthorized"
+        400:
+          $ref: "#/components/responses/400InvalidBody"
         404:
           $ref: "#/components/responses/404NotFound"
     delete:
@@ -169,9 +174,10 @@ paths:
       responses:
         200:
           description: "Task successfully deleted"
-          content: {}
-        400:
-          $ref: "#/components/responses/400BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
         401:
           $ref: "#/components/responses/401Unauthorized"
         404:
@@ -182,17 +188,15 @@ components:
       type: http
       scheme: bearer
   schemas:
-    NewTask:
-      required:
-        - title
+    Tasks:
       type: object
+      required:
+        - tasks
       properties:
-        title:
-          type: string
-          example: Study HTTP
-        description:
-          type: string
-          example: Read the HTTP documentation.
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
     Task:
       allOf:
         - $ref: "#/components/schemas/NewTask"
@@ -207,6 +211,18 @@ components:
             userId:
               type: integer
               example: 1
+    NewTask:
+      required:
+        - title
+        - description
+      type: object
+      properties:
+        title:
+          type: string
+          example: Study HTTP
+        description:
+          type: string
+          example: Read the HTTP documentation.
     NewUser:
       type: object
       required:
@@ -238,22 +254,36 @@ components:
     InvalidBody:
       type: object
       properties:
+        code:
+          type: integer
+          example: 2
         error:
           type: string
           example: "Invalid body content"
+    InvalidQuery:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 3
+        error:
+          type: string
+          example: "Invalid query string"
     NotFound:
       type: object
       properties:
-        uri:
-          type: string
-          format: uri
-          example: "/tasks/1"
-        description:
+        code:
+          type: integer
+          example: 4
+        error:
           type: string
           example: "Task with id 1 not found"
     MissingToken:
       type: object
       properties:
+        code:
+          type: integer
+          example: 5
         error:
           type: string
           example: "Missing token."
@@ -270,11 +300,21 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/NotFound"
-    400BadRequest:
-      description: "Invalid Request because of a missing Parameter or invalid body content"
+    400InvalidBody:
+      description: "Invalid body content"
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: "#/components/schemas/MissingParameter"
-              - $ref: "#/components/schemas/InvalidBody"
+            $ref: "#/components/schemas/InvalidBody"
+    400InvalidParameter:
+      description: "Missing parameter"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MissingParameter"
+    400InvalidQuery:
+      description: "Invalid query string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InvalidQuery"

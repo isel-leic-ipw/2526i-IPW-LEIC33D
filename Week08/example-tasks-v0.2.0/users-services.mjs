@@ -1,7 +1,11 @@
 import crypto from 'node:crypto';
 
-// FUNCTIONS (API services):
+// FUNCTIONS (API services for users):
+// Warning:
+// - Needs to implement other CRUD functionalities.
+// - Needs internal error code implementation.
 
+// Database in memory with 2 users hard-coded for tests.
 const USERS = [
   {
     id: 1,
