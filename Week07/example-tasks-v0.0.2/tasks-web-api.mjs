@@ -14,8 +14,9 @@ export function getTask(req, res){
 }
 
 export function getAllTasks(req, res){
-  if (tasksServices.getAllTasks(req.query)) {
-    res.json(tasksServices.getAllTasks(req.query));
+  const tasks = tasksServices.getAllTasks(req.query);
+  if (tasks) {
+    res.json(tasks);
   }
   else {
     // An invalid query
