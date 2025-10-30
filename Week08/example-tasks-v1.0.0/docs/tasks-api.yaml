@@ -1,0 +1,360 @@
+openapi: 3.0.1
+info:
+  title: Tasks API
+  description: This is a simple API for managing tasks
+  contact:
+    email: email@isel.pt
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.2.0
+servers:
+  - description: Localhost server for testing API
+    url: http://localhost:8000
+security: # Bearer Authorization is global
+  - bearerAuth: []
+tags:
+  - name: Tasks
+  - name: Users
+paths:
+  /users:
+    description: The resource that contains all users
+    post:
+      tags:
+        - Users
+      summary: adds a user
+      description: Adds a user to the system
+      operationId: addUser
+      security: []  # Remove the need for authorization
+      requestBody:
+        description: User to add
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewUser"
+        required: true
+      responses:
+        201:
+          description: user created
+          content:
+            application/json:
+              schema:
+                required:
+                  - token
+                type: object
+                properties:
+                  token:
+                    type: string
+                    format: uuid
+        400: 
+          $ref: "#/components/responses/400InvalidBody"
+  /tasks:
+    description: Resource that contains all Tasks
+    get:
+      tags:
+        - Tasks
+      summary: get all tasks
+      description: Get all tasks from an specified user (by token).
+      operationId: getAllTasks
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          required: false
+          description: Query to search a String in all tasks returning a subset of tasks.
+      responses:
+        200:
+          description: In case of success, returns a list of tasks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tasks"
+        400:
+          $ref: "#/components/responses/400InvalidQuery"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+    post:
+      tags:
+        - Tasks
+      summary: adds a task
+      description: Adds a task to the system
+      operationId: addTask
+      security:
+        - bearerAuth: [] # Redundant
+      requestBody:
+        description: Task to add
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTask"
+      responses:
+        201:
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewTaskCreated"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+        400:
+          $ref: "#/components/responses/400InvalidBody"
+
+  /tasks/{taskId}:
+    description: The resource that represents one Task
+    get:
+      tags:
+        - Tasks
+      summary: Get a task given its id
+      operationId: getTask
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of task that to be fetched
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+        404:
+          $ref: "#/components/responses/404NotFound"
+        400:
+          $ref: "#/components/responses/400InvalidParameter"
+    delete:
+      tags:
+        - Tasks
+      summary: Delete a task by ID
+      description: Delete a task by ID
+      operationId: deleteTask
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Task successfully deleted"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+        404:
+          $ref: "#/components/responses/404NotFound"
+        400:
+          $ref: "#/components/responses/400InvalidParameter"
+    put:
+      tags:
+        - Tasks
+      summary: update (replace) a task
+      description: Updates (replaces) a Task in the system
+      operationId: updateTask
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to be replaced
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Task to add
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTask"
+      responses:
+        201:
+          description: task updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+        400:
+          $ref: "#/components/responses/400BadRequest"
+        404:
+          $ref: "#/components/responses/404NotFound"
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+  schemas:
+    Tasks:
+      type: object
+      required:
+        - tasks
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+    Task:
+      allOf:
+        - $ref: "#/components/schemas/NewTask"
+        - type: object
+          required:
+            - id
+            - userId
+          properties:
+            id:
+              type: integer
+              example: 1
+            userId:
+              type: integer
+              example: 1
+    NewTask:
+      required:
+        - title
+        - description
+      type: object
+      properties:
+        title:
+          type: string
+          example: Study HTTP
+        description:
+          type: string
+          example: Read the HTTP documentation.
+    NewUser:
+      type: object
+      required:
+        - userName
+      properties:
+        userName:
+          type: string
+          example: asilva
+    NewTaskCreated:
+      required:
+        - status
+        - task
+      type: object
+      properties:
+        status:
+          type: string
+          example: Task with id 123 created with success
+        task:
+          $ref: "#/components/schemas/Task"
+    TaskDelete:
+      required:
+        - status
+        - task
+      type: object
+      properties:
+        status:
+          type: string
+          example: Task with id 123 delete with success
+        task:
+          $ref: "#/components/schemas/Task"
+    MissingParameter:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 1
+        error:
+          type: string
+          example: "Missing required parameter"
+    InvalidParameter:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 2
+        error:
+          type: string
+          example: "Invalid parameter"
+    InvalidBody:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 3
+        error:
+          type: string
+          example: "Invalid body content"
+    InvalidQuery:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 4
+        error:
+          type: string
+          example: "Invalid query string"
+    NotFound:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 5
+        error:
+          type: string
+          example: "Task with id 1 not found"
+    MissingToken:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 6
+        error:
+          type: string
+          example: "Missing token."
+  responses:
+    401Unauthorized:
+      description: "Access to the resource is unauthorized."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MissingToken"
+    404NotFound:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NotFound"
+    400BadRequest:
+      description: "Missing parameter"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidParameter"
+              - $ref: "#/components/schemas/InvalidBody"
+              - $ref: "#/components/schemas/InvalidQuery"
+              - $ref: "#/components/schemas/MissingParameter"
+    400InvalidBody:
+      description: "Invalid body content"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InvalidBody"
+    400InvalidParameter:
+      description: "Invalid parameter"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InvalidParameter"
+    400InvalidQuery:
+      description: "Invalid query string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InvalidQuery"
+    400MissingParameter:
+      description: "Missing parameter"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MissingParameter"
