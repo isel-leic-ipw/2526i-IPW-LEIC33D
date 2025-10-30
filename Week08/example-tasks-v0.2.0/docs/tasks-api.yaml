@@ -126,6 +126,34 @@ paths:
           $ref: "#/components/responses/401Unauthorized"
         404:
           $ref: "#/components/responses/404NotFound"
+        400:
+          $ref: "#/components/responses/400InvalidParameter"
+    delete:
+      tags:
+        - Tasks
+      summary: Delete a task by ID
+      description: Delete a task by ID
+      operationId: deleteTask
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Task successfully deleted"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        401:
+          $ref: "#/components/responses/401Unauthorized"
+        404:
+          $ref: "#/components/responses/404NotFound"
+        400:
+          $ref: "#/components/responses/400InvalidParameter"
     put:
       tags:
         - Tasks
@@ -155,31 +183,7 @@ paths:
         401:
           $ref: "#/components/responses/401Unauthorized"
         400:
-          $ref: "#/components/responses/400InvalidBody"
-        404:
-          $ref: "#/components/responses/404NotFound"
-    delete:
-      tags:
-        - Tasks
-      summary: Delete a task by ID
-      description: Delete a task by ID
-      operationId: deleteTask
-      parameters:
-        - name: taskId
-          in: path
-          description: ID of the task to be deleted
-          required: true
-          schema:
-            type: integer
-      responses:
-        200:
-          description: "Task successfully deleted"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Task"
-        401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: "#/components/responses/400BadRequest"
         404:
           $ref: "#/components/responses/404NotFound"
 components:
@@ -242,6 +246,17 @@ components:
           example: Task with id 123 created with success
         task:
           $ref: "#/components/schemas/Task"
+    TaskDelete:
+      required:
+        - status
+        - task
+      type: object
+      properties:
+        status:
+          type: string
+          example: Task with id 123 delete with success
+        task:
+          $ref: "#/components/schemas/Task"
     MissingParameter:
       type: object
       properties:
@@ -251,12 +266,21 @@ components:
         error:
           type: string
           example: "Missing required parameter"
-    InvalidBody:
+    InvalidParameter:
       type: object
       properties:
         code:
           type: integer
           example: 2
+        error:
+          type: string
+          example: "Invalid parameter"
+    InvalidBody:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 3
         error:
           type: string
           example: "Invalid body content"
@@ -265,7 +289,7 @@ components:
       properties:
         code:
           type: integer
-          example: 3
+          example: 4
         error:
           type: string
           example: "Invalid query string"
@@ -274,7 +298,7 @@ components:
       properties:
         code:
           type: integer
-          example: 4
+          example: 5
         error:
           type: string
           example: "Task with id 1 not found"
@@ -283,7 +307,7 @@ components:
       properties:
         code:
           type: integer
-          example: 5
+          example: 6
         error:
           type: string
           example: "Missing token."
@@ -300,6 +324,16 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/NotFound"
+    400BadRequest:
+      description: "Missing parameter"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidParameter"
+              - $ref: "#/components/schemas/InvalidBody"
+              - $ref: "#/components/schemas/InvalidQuery"
+              - $ref: "#/components/schemas/MissingParameter"
     400InvalidBody:
       description: "Invalid body content"
       content:
@@ -307,14 +341,20 @@ components:
           schema:
             $ref: "#/components/schemas/InvalidBody"
     400InvalidParameter:
-      description: "Missing parameter"
+      description: "Invalid parameter"
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/MissingParameter"
+            $ref: "#/components/schemas/InvalidParameter"
     400InvalidQuery:
       description: "Invalid query string"
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/InvalidQuery"
+    400MissingParameter:
+      description: "Missing parameter"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MissingParameter"
