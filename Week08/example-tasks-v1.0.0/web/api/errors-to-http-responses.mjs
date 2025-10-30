@@ -10,12 +10,12 @@ function HttpResponseError(status, e) {
 }
 
 // Input: an error object:
-//      - Error {code: <numberValue>, description: <stringValue>}
+//      Error {internalError: <numberValue>, description: <stringValue>}
 // Output: an HTTP status response object:
-//      - HttpResponse {
+//      HttpResponse {
 //          status: <numberValue>, 
-//          body: {code: <numberValue>, description: <stringValue>}
-//        }
+//          body: {code: <numberValue>, error: <stringValue>}
+//      }
 export function errorToHttp(e) {
     switch(e.internalError) {
         case INTERNAL_ERROR_CODES.INVALID_BODY: return new HttpResponseError(400, e);
@@ -27,6 +27,9 @@ export function errorToHttp(e) {
         case INTERNAL_ERROR_CODES.MISSING_TOKEN: return new HttpResponseError(401, e)
         case INTERNAL_ERROR_CODES.NOT_AUTHORIZED: return new HttpResponseError(401, e);
         case INTERNAL_ERROR_CODES.USER_ALREADY_EXISTS: return new HttpResponseError(400, e);
-        default: return new HttpResponseError(500, "Internal server error. Contact your professor!");
+        default: return new HttpResponseError(500, {
+          internalError: 0,
+          description: "Internal server error. Contact your professor!"
+        });
     }
 }
