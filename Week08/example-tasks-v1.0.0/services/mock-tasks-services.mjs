@@ -32,7 +32,7 @@ export function getAllTasks(query, userToken){
   const tasksUser = TASKS.filter(task => task.userId == userId);
 
   if (queryLen == 0){ // There is no query string
-    return {tasks: tasksUser};
+    return tasksUser;
   }
   console.log("Query string:", query);
   if (queryLen == 1 && "search" in query){
@@ -42,7 +42,7 @@ export function getAllTasks(query, userToken){
       task => (task.title.includes(querySearch) || 
       task.description.includes(querySearch))
     );
-    return({tasks: searchedTasks});
+    return(searchedTasks);
   }
   else {
     return {
@@ -56,7 +56,7 @@ export function addTask(newTask, userToken){
   const userId = usersServices.getUserId(userToken);
   if (! ("title" in newTask) || ! ("description" in newTask)){
     return {
-      internalError: INTERNAL_ERROR_CODES.INVALID_BODY,
+      internalError: INTERNAL_ERROR_CODES.INVALID_TASK,
       description: `Invalid body: missing title and/or description.`
     };
   }
@@ -129,7 +129,7 @@ export function updateTask(idTask, newTask, userToken){
     if (! ("title" in newTask) || ! ("description" in newTask)){
       // Invalid task data
       return {
-        internalError: INTERNAL_ERROR_CODES.INVALID_BODY,
+        internalError: INTERNAL_ERROR_CODES.INVALID_TASK,
         description: `Invalid body: missing title and description.`
       };
     }

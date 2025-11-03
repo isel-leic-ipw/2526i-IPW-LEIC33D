@@ -10,26 +10,27 @@ function HttpResponseError(status, e) {
 }
 
 // Input: an error object:
-//      Error {internalError: <numberValue>, description: <stringValue>}
+//      - Error {code: <numberValue>, description: <stringValue>}
 // Output: an HTTP status response object:
-//      HttpResponse {
+//      - HttpResponse {
 //          status: <numberValue>, 
-//          body: {code: <numberValue>, error: <stringValue>}
-//      }
+//          body: {code: <numberValue>, description: <stringValue>}
+//        }
 export function errorToHttp(e) {
     switch(e.internalError) {
-        case INTERNAL_ERROR_CODES.INVALID_BODY: return new HttpResponseError(400, e);
+        case INTERNAL_ERROR_CODES.INVALID_TASK: return new HttpResponseError(400, e);
+        case INTERNAL_ERROR_CODES.INVALID_USER: return new HttpResponseError(400, e);
         case INTERNAL_ERROR_CODES.INVALID_QUERY: return new HttpResponseError(400, e);
         case INTERNAL_ERROR_CODES.INVALID_PARAMETER: return new HttpResponseError(400, e);
-        case INTERNAL_ERROR_CODES.MISSING_PARAMETER: return new HttpResponseError(400, e);
         case INTERNAL_ERROR_CODES.TASK_NOT_FOUND: return new HttpResponseError(404, e);
         case INTERNAL_ERROR_CODES.USER_NOT_FOUND: return new HttpResponseError(404, e);
+        case INTERNAL_ERROR_CODES.USER_ALREADY_EXISTS: return new HttpResponseError(400, e);
+        case INTERNAL_ERROR_CODES.MISSING_PARAMETER: return new HttpResponseError(400, e);
         case INTERNAL_ERROR_CODES.MISSING_TOKEN: return new HttpResponseError(401, e)
         case INTERNAL_ERROR_CODES.NOT_AUTHORIZED: return new HttpResponseError(401, e);
-        case INTERNAL_ERROR_CODES.USER_ALREADY_EXISTS: return new HttpResponseError(400, e);
         default: return new HttpResponseError(500, {
-          internalError: 0,
-          description: "Internal server error. Contact your professor!"
-        });
+                internalError: INTERNAL_ERROR_CODES.SERVER_ERROR,
+                description: "Internal server error. Contact your professor!"
+            });
     }
 }

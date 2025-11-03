@@ -7,7 +7,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.2.0
+  version: 1.0.0
 servers:
   - description: Localhost server for testing API
     url: http://localhost:8000
@@ -147,7 +147,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                $ref: "#/components/schemas/TaskDelete"
         401:
           $ref: "#/components/responses/401Unauthorized"
         404:
@@ -179,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                $ref: "#/components/schemas/TaskUpdated"
         401:
           $ref: "#/components/responses/401Unauthorized"
         400:
@@ -249,12 +249,20 @@ components:
     TaskDelete:
       required:
         - status
+      type: object
+      properties:
+        status:
+          type: string
+          example: Task 123 was delete!
+    TaskUpdated:
+      required:
+        - status
         - task
       type: object
       properties:
         status:
           type: string
-          example: Task with id 123 delete with success
+          example: Task with id 123 was updated!
         task:
           $ref: "#/components/schemas/Task"
     MissingParameter:
@@ -325,7 +333,7 @@ components:
           schema:
             $ref: "#/components/schemas/NotFound"
     400BadRequest:
-      description: "Missing parameter"
+      description: "Bad Request"
       content:
         application/json:
           schema:

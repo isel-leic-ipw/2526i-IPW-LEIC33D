@@ -17,6 +17,9 @@ app.use(express.json());
 // add user
 app.post("/users", usersAPI.addUser);
 
+// Authorize a user by a given token
+//app.use("/tasks*", tasksAPI.authorize);
+
 // get task by id
 app.get("/tasks/:taskId", tasksAPI.getTask);
 

@@ -25,14 +25,14 @@ function nextId(){
 export function addUser(username){
   if (! username) {
     return {
-      internalError: INTERNAL_ERROR_CODES.INVALID_BODY,
+      internalError: INTERNAL_ERROR_CODES.INVALID_USER,
       description: `Invalid body: missing username.`
     }    
   }
   const userFound = USERS.find(user => username == user.name);
   if (userFound) {
     return {
-      internalError: INTERNAL_ERROR_CODES.INVALID_BODY,
+      internalError: INTERNAL_ERROR_CODES.USER_ALREADY_EXISTS,
       description: `Invalid body: user ${username} already exists. Try another username.`
     }
   }
@@ -42,7 +42,7 @@ export function addUser(username){
     name: username
   };
   USERS.push(user);
-  return {token: user.token};
+  return user;
 }
 
 export function getUserId(token){

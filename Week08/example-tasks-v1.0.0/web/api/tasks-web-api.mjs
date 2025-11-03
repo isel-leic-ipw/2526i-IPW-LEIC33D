@@ -40,7 +40,7 @@ function internal_getAllTasks(req, res){
 
   // Success case
   const tasks = output;
-  res.json(tasks);
+  res.json({tasks: tasks});
 }
 
 function internal_getTask(req, res){
@@ -54,6 +54,7 @@ function internal_getTask(req, res){
 
 function internal_addTask(req, res){
   const output = tasksServices.addTask(req.body, req.userToken);
+  console.log("Output", output);
   if (output.internalError) return output;
 
   // Success case
@@ -80,6 +81,7 @@ function internal_deleteTask(req, res){
 function internal_updateTask(req, res){
   const taskId = req.params.taskId;
   let output = tasksServices.updateTask(taskId, req.body, req.userToken);
+  console.log("Output", output);
   if (output.internalError) return output;
 
   // Success case

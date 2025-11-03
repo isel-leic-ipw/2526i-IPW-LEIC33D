@@ -1,6 +1,8 @@
 ### User 2 (testing app)
 @token = f1d1cdbc-97f0-41c4-b206-051250684b19
 
+### SUCCESS REQUESTS
+
 ### Insert a task
 POST http://localhost:8000/tasks
 Content-Type: application/json
@@ -53,9 +55,9 @@ Authorization: Bearer {{token}}
 
 
 
-### GET ALL ERRORS
+### GET-ALL-TASKS ERRORS
 
-### Get tasks with empty token
+### Get tasks with empty token. Expecting "Missing Token"
 GET http://localhost:8000/tasks
 Authorization: Bearer
 
@@ -65,7 +67,7 @@ Authorization: Bearer {{token}}
 
 ### POST ERRORS
 
-### Insert a task without token
+### Insert a task without token. Expecting "Missing Token"
 POST http://localhost:8000/tasks
 Content-Type: application/json
 

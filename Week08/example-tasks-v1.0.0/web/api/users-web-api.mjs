@@ -13,7 +13,7 @@ export function addUser(req, res){
     return ;
   }
   // Success
-  const userToken = output;
+  const user = output;
   res.status(201);
-  res.json(userToken);
+  res.json({token: user.token});
 }
