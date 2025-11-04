@@ -1,0 +1,22 @@
+{
+  "name": "example-task",
+  "version": "1.2.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node tasks-server.mjs",
+    "start-dev": "nodemon tasks-server.mjs",
+    "test": "mocha"
+  },
+  "author": "Fernanda Passos",
+  "license": "ISC",
+  "description": "Simple Tasks manager API",
+  "dependencies": {
+    "express": "^4.21.1",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^11.7.4"
+  }
+}
