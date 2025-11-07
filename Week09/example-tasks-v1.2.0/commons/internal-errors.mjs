@@ -31,7 +31,7 @@ export const errors = {
         return new Error(INTERNAL_ERROR_CODES.INVALID_PARAMETER, `Invalid parameter ${what}`);
     },
     TASK_NOT_FOUND: (what) => { 
-        return new Error(INTERNAL_ERROR_CODES.NOT_FOUND,`Task ${what} not found`);
+        return new Error(INTERNAL_ERROR_CODES.TASK_NOT_FOUND,`Task ${what} not found`);
     },
     USER_NOT_FOUND: (who) => { 
         return new Error(INTERNAL_ERROR_CODES.USER_NOT_FOUND,`User ${who} not found`);
