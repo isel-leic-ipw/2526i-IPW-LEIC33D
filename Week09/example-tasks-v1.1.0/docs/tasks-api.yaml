@@ -74,6 +74,8 @@ paths:
           $ref: "#/components/responses/400InvalidQuery"
         401:
           $ref: "#/components/responses/401Unauthorized"
+        404:
+          $ref: "#/components/responses/404NotFound" # User not found
     post:
       tags:
         - Tasks
@@ -99,6 +101,8 @@ paths:
           $ref: "#/components/responses/401Unauthorized"
         400:
           $ref: "#/components/responses/400InvalidBody"
+        404:
+          $ref: "#/components/responses/404NotFound" # User not found
 
   /tasks/{taskId}:
     description: The resource that represents one Task
@@ -143,7 +147,7 @@ paths:
             type: integer
       responses:
         200:
-          description: "Task successfully delete"
+          description: "Task successfully deleted"
           content:
             application/json:
               schema:
@@ -301,7 +305,7 @@ components:
         error:
           type: string
           example: "Invalid query string"
-    NotFound:
+    TaskNotFound:
       type: object
       properties:
         code:
@@ -310,12 +314,21 @@ components:
         error:
           type: string
           example: "Task with id 1 not found"
-    MissingToken:
+    UserNotFound:
       type: object
       properties:
         code:
           type: integer
           example: 6
+        error:
+          type: string
+          example: "User not found"
+    MissingToken:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 7
         error:
           type: string
           example: "Missing token."
@@ -331,7 +344,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/NotFound"
+            oneOf:
+              - $ref: "#/components/schemas/TaskNotFound"
+              - $ref: "#/components/schemas/UserNotFound"
     400BadRequest:
       description: "Bad Request"
       content:

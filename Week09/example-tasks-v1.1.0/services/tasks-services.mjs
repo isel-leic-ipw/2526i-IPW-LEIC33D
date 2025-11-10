@@ -6,6 +6,9 @@ import { errors } from '../commons/internal-errors.mjs';
 // Output: an array of tasks or an internal error object.
 export function getAllTasks(query, userToken){
   const userId = usersServices.getUserId(userToken);
+  if (! userId) {
+    return errors.USER_NOT_FOUND();
+  }
 
   const tasks = tasksData.getAllTasks(userId);
 
@@ -27,6 +30,9 @@ export function getAllTasks(query, userToken){
 // Output: a task or a internal error object.
 export function addTask(newTask, userToken){
   const userId = usersServices.getUserId(userToken);
+  if (! userId) {
+    return errors.USER_NOT_FOUND();
+  }
   if (! tasksData.isValidTask(newTask)){
     return errors.INVALID_TASK();
   }
@@ -40,6 +46,9 @@ export function getTask(idTask, userToken){
     return errors.INVALID_PARAMETER(idTask);
   }
   const userId = usersServices.getUserId(userToken);
+  if (! userId) {
+    return errors.USER_NOT_FOUND();
+  }
   //console.log(`Getting task ${idTask} from user ${userId}`);
   const task = tasksData.getTask(idTask, userId);
   if (! task) {
