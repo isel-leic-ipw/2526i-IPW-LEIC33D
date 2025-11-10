@@ -25,6 +25,7 @@ export default function init(tasksData, usersServices) {
   // Output: an array of tasks or an internal error object.
   function getAllTasks(query, userToken){
     const userId = usersServices.getUserId(userToken);
+    if (! userId) return errors.USER_NOT_FOUND();
 
     const tasks = tasksData.getAllTasks(userId);
 
@@ -46,6 +47,7 @@ export default function init(tasksData, usersServices) {
   // Output: a task or a internal error object.
   function addTask(newTask, userToken){
     const userId = usersServices.getUserId(userToken);
+    if (! userId) return errors.USER_NOT_FOUND();
     if (! tasksData.isValidTask(newTask)){
       return errors.INVALID_TASK();
     }
@@ -59,6 +61,7 @@ export default function init(tasksData, usersServices) {
       return errors.INVALID_PARAMETER(idTask);
     }
     const userId = usersServices.getUserId(userToken);
+    if (! userId) return errors.USER_NOT_FOUND();
     //console.log(`Getting task ${idTask} from user ${userId}`);
     const task = tasksData.getTask(idTask, userId);
     if (! task) {

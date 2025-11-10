@@ -117,6 +117,7 @@ Authorization: Bearer {{token}}
 
 ### Replace task without a token
 PUT http://localhost:8000/tasks/1
+Content-Type: application/json
 
 {
     "title": "Relax",
@@ -126,6 +127,7 @@ PUT http://localhost:8000/tasks/1
 ### Replace task with inexistent id (but valid)
 PUT http://localhost:8000/tasks/2
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
 {
     "title": "Relax",
@@ -135,6 +137,7 @@ Authorization: Bearer {{token}}
 ### Replace task with invalid id
 PUT http://localhost:8000/tasks/t1
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
 {
     "title": "Relax",
@@ -144,6 +147,7 @@ Authorization: Bearer {{token}}
 ### Replace task with invalid body
 PUT http://localhost:8000/tasks/1
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
 {
     "title": "Do the assignment 2",

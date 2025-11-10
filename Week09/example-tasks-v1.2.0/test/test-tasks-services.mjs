@@ -65,7 +65,7 @@ describe("Testing Tasks Management API services with mock tasks data", () => {
             // Act
             const output = tasksServices.getAllTasks({}, undefined);
             // Assert
-            assert.deepStrictEqual(output, []);
+            assert.deepStrictEqual(output, errors.USER_NOT_FOUND());
         });
     });
 
