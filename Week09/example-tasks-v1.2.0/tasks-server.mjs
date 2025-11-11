@@ -31,34 +31,38 @@ catch (err) {
   console.error(err);
 }
 
-const app = express(); // Express function returns an app
+if (tasksAPI && usersAPI){
 
-// Swagger UI for the yaml documentation (OpenAPI):
-const swaggerDocument = yaml.load('./docs/tasks-api.yaml');
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  const app = express(); // Express function returns an app
 
-// Parser the body to JSON
-app.use(express.json());
+  // Swagger UI for the yaml documentation (OpenAPI):
+  const swaggerDocument = yaml.load('./docs/tasks-api.yaml');
+  app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// add user
-app.post("/users", usersAPI.addUser);
+  // Parser the body to JSON
+  app.use(express.json());
 
-// get task by id
-app.get("/tasks/:taskId", tasksAPI.getTask);
+  // add user
+  app.post("/users", usersAPI.addUser);
 
-// list tasks
-app.get("/tasks", tasksAPI.getAllTasks);
+  // get task by id
+  app.get("/tasks/:taskId", tasksAPI.getTask);
 
-// add task
-app.post("/tasks", tasksAPI.addTask);
+  // list tasks
+  app.get("/tasks", tasksAPI.getAllTasks);
 
-// delete task by id
-app.delete("/tasks/:taskId", tasksAPI.deleteTask);
+  // add task
+  app.post("/tasks", tasksAPI.addTask);
 
-// update task by id
-app.put("/tasks/:taskId", tasksAPI.updateTask);
+  // delete task by id
+  app.delete("/tasks/:taskId", tasksAPI.deleteTask);
 
-// App listening...
-app.listen(PORT, () =>
-  console.log(`Tasks app listening on port ${PORT}!`),
-);
+  // update task by id
+  app.put("/tasks/:taskId", tasksAPI.updateTask);
+
+  // App listening...
+  app.listen(PORT, () =>
+    console.log(`Tasks app listening on port ${PORT}!`),
+  );
+
+}
