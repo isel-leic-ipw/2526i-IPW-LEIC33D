@@ -30,7 +30,7 @@ export default function init(tasksServices) {
 
   // Verify the module dependencies:
   if(! tasksServices){
-    return Promise.reject(errors.INVALID_ARGUMENT('tasksServices'));
+    throw errors.INVALID_ARGUMENT('tasksServices');
   }
 
   return {
