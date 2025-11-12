@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title> Testing CORS </title>
+        <script>
+            //const API_URL = "https://api.chucknorris.io/jokes/random";
+            const API_URL = "http://localhost:8000/tasks"; // My Tasks Web API
+            const options = {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer f1d1cdbc-97f0-41c4-b206-051250684b19",
+                }
+            }
+            fetch(API_URL, options)
+                .then(req => req.text())
+                .then(text => changeDivContent(text))
+                .catch(console.error);
+            
+            function changeDivContent(text){
+                let finalText = `<p>URI: ${API_URL}</p>`;
+                finalText += `<p>${text}</p>`
+                document.getElementById("content").innerHTML = finalText;
+            }
+        </script>
+    </head>
+    <body>
+        <h1> Testing CORS for a fetch of an API</h1>
+        <div id="content">
+            <p>If this text here appears, something went wrong with fetch!</p>
+            <p>See the errors in inspect mode...</p>
+        </div>
+    </body>
+</html>
