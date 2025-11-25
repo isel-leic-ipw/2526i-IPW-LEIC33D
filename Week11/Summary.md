@@ -15,3 +15,4 @@
 
 ## Nov-20 (1.5 h):
 - [HTML and CSS Overview](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/20-HTML-and-CSS-Overview).
+    - All HTML part.
