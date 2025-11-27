@@ -12,5 +12,8 @@
 ## Nov-27 (1.5 h):
 - [Template Engine](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/21-Template-Engine).
     - Conclusion.
+    - 3rd Assignment - FOCACCIA Part 2: some static views as example to give a clue about how to navigate between the web pages por the application.
+        - [Week12/A3-view-examples/](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/blob/main/Week12/A3-view-examples/)
+        - Based on the static views, HBS should be used to incorporate the dynamic data (*e.g.*, ids, group names, ...).
 - [Elasticsearch](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/22-Elasticsearch).
     - Introduction.
