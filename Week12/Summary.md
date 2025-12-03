@@ -16,4 +16,4 @@
         - [Week12/A3-view-examples/](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/blob/main/Week12/A3-view-examples/)
         - Based on the static views, HBS should be used to incorporate the dynamic data (*e.g.*, ids, group names, ...).
 - [Elasticsearch](https://github.com/isel-leic-ipw/2526i-IPW-LEIC33D/wiki/22-Elasticsearch).
-    - Introduction.
+    - Introduction (up to installation part).
