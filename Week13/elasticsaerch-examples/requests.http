@@ -1,0 +1,140 @@
+@hostname=localhost
+@port=9200
+@token=bGpHenhKb0IxUXVJbS0wTkN0eEo6QUFBQUdPM19CSmNTNEpxTjFpY2tvUQ==
+
+### Get basic information:
+GET http://{{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Remove Books index:
+DELETE /books
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Remove products index:
+DELETE /products
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Create books (as example) index:
+PUT /books
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Create products (as example) index:
+PUT /products
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### List indexes:
+GET /*
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Create a document in /books:
+POST /books/_doc
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+  "name": "The Handmaids Tale",
+  "author": "Margaret Atwood", 
+  "release_date": "1985-06-01", 
+  "page_count": 311
+}
+
+### Create another document in /books:
+POST /books/_doc
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+    "name": "1984", 
+    "author": "George Orwell", 
+    "release_date": "1985-06-01", 
+    "page_count": 328
+}
+
+### Create another document in /books:
+POST /books/_doc
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+    "name": "Alias Grace", 
+    "author": "Margaret Atwood", 
+    "release_date": "1996-09-01", 
+    "page_count": 470
+}
+
+### Create another document in /books:
+POST /books/_doc
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+  "name": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "release_date": "1925-04-10",
+  "page_count": 180
+}
+
+### List documents from /books:
+GET /books/_search
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Filter documents from /books by author='Margaret Atwood':
+POST /books/_search
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+  "query": {
+    "match": {
+      "author": "Margaret Atwood"
+    }
+  }
+}
+
+### Get document by id from /books:
+# Must specify the id from elasticsearch
+GET /books/_doc/BqFMxZoB12uyGq0alZDZ
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Update a document (The Great Gatsby"):
+# Must specify the id from elasticsearch
+PUT /books/_doc/BqFMxZoB12uyGq0alZDZ
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+Authorization: ApiKey {{token}}
+
+{
+  "name": "The Great Gatsby",
+  "author": "Francis Scott Fitzgerald",
+  "release_date": "1925-04-10",
+  "page_count": 180
+}
+
+### Get document by id from /books:
+# Must specify the id from elasticsearch
+GET /books/_doc/DdvjRJMBSOEBAVqSnUNw
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Delete a document from /books:
+# Must specify the id from elasticsearch
+DELETE /books/_doc/B6FNxZoB12uyGq0aj5CR
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### List documents from /books:
+GET /books/_search
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
