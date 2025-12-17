@@ -64,14 +64,14 @@ export default function init(tasksServices){
     const taskPromise = tasksServices.addTask(req.body, req.userToken);
     return taskPromise.then(task => {
       res.status(201);
-      return res.redirect("/site/tasks");
+      return res.redirect(303, "/site/tasks");
     });
   }
 
   function internal_deleteTask(req, res){
     const taskId = req.params.taskId;
     const deleteTaskPromise = tasksServices.deleteTask(taskId, req.userToken);
-    return deleteTaskPromise.then(deleteTask => res.redirect("/site/tasks"));
+    return deleteTaskPromise.then(deleteTask => res.redirect(303, "/site/tasks"));
   }
 
   function internal_updateTask(req, res){
@@ -79,7 +79,7 @@ export default function init(tasksServices){
     const newTask = req.body;
     const userToken = req.userToken;
     const updatedTaskPromise = tasksServices.updateTask(taskId, newTask, userToken);
-    return updatedTaskPromise.then(updateTask => res.redirect("/site/tasks"));
+    return updatedTaskPromise.then(updateTask => res.redirect(303, "/site/tasks"));
   }
 
   // Auxiliary module function
