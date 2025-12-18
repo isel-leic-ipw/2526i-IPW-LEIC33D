@@ -1,0 +1,32 @@
+@hostname=localhost
+@port=9200
+@token=token_value_if_necessary
+
+### Get basic information:
+GET http://{{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### List indexes:
+GET /*
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### List documents from /tasks:
+GET /tasks/_search
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### List documents from /users:
+GET /users/_search
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Remove Tasks index:
+DELETE /tasks
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}
+
+### Remove Users index:
+DELETE /users
+Host: {{hostname}}:{{port}}
+Authorization: ApiKey {{token}}

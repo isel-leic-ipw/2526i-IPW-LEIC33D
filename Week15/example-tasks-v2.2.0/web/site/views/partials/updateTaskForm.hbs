@@ -1,0 +1,22 @@
+<!--
+<section class="container p-2 bg-light shadow border">
+    <h3> Update task: </h3>
+    <form action="/site/tasks/{{id}}/update" method="POST">
+        {{> taskContentForm}}
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+</section> 
+-->
+
+<section class="container p-2 bg-light shadow border">
+    <h3> Update {{title}}: </h3>
+    <form id="formUpdateTask" action="/site/tasks/{{id}}">
+        {{> taskContentForm}}
+        <button id="btn-update-task"
+            class="btn btn-primary" 
+            type="button" 
+            form="formUpdateTask" 
+            onclick="handleClickUpdate({{id}}, '{{title}}')"
+        > Submit </button>
+    </form>
+</section>

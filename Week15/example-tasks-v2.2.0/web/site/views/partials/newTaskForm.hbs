@@ -1,0 +1,7 @@
+<section class="container p-2 bg-light shadow border">
+    <h3> New task: </h3>
+    <form action="/site/tasks" method="POST">
+        {{> taskContentForm}}        
+        <input class="btn btn-primary" type="submit" value="Create"> </input>
+    </form>
+</section>
